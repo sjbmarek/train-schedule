@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Train Schedule</title>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> 
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-10 bg-warning text-center p-4">
+          <h1>Train Schedule - Korea</h1>
+          <h5>Complete schedule for trains</h5>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-10">
+         <div class="pt-3 pb-1">
+          <h2>Current Train Schedule</h2>
+          <div class="border p-3">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                  <th scope="col">Not Needed</th>
+                </tr>
+              </thead>
+              <tbody id="addRow">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-10">
+        <div class="pt-5 pb-1">
+          <h2>Add a Train</h2>
+        </div>
+        <form id="employeeData" class ="border p-3">
+
+          <!-- Label for Text Box -->
+          <label for="name">Train Name</label><br>
+          <!-- Text Input Box -->
+          <input type="text" id="name" class="form-control">
+
+
+           <label for="role">Destination</label><br>
+          <!-- Text Input Box -->
+          <input type="text" id="role" class="form-control">
+
+
+
+           <label for="startDate">First Train Time (HH:mm - military time)</label><br>
+          <!-- Text Input Box -->
+          <input type="text" id="startDate" class="form-control">
+
+
+
+           <label for="monthlyRate">Frequency (min)</label><br>
+          <!-- Text Input Box -->
+          <input type="text" id="monthlyRate" class="form-control"><br>
+
+          <!-- Submit Button -->
+          <!-- <input id="search" type="submit" value="Search"> -->
+          <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+    
+        </form>
+      </div>
+    </div>
+
+
+
+  </div>
+
+<!-- 
+
+<script>
+
+
+   // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBkHlX4gqpYOqfBrQUZmY6XLl4LWfkLRJw",
+    authDomain: "testsusan-56bcd.firebaseapp.com",
+    databaseURL: "https://testsusan-56bcd.firebaseio.com",
+    projectId: "testsusan-56bcd",
+    storageBucket: "testsusan-56bcd.appspot.com",
+    messagingSenderId: "577306188182"
+  };
+
+  firebase.initializeApp(config);
+
+      var database = firebase.database();
+
+      $("#submit").on("click", function(event) {
+      event.preventDefault();
+
+      // Capture User Inputs and store them into variables
+      var name = $("#name").val().trim();
+      var role = $("#role").val().trim();
+      var startDate = $("#startDate").val().trim();
+      var monthlyRate = $("#monthlyRate").val().trim();
+
+      // var today = new moment();
+      // var emp_date = new moment(startDate);
+      // var dateDiff = moment().subtract(startDate);
+      // console.log(dateDiff);
+      var monthsWorked = Math.floor(moment().diff(startDate,"months",true));
+      console.log(monthsWorked);
+
+      var totalBilled = monthsWorked * monthlyRate;
+
+      console.log("name: " + name);
+      console.log("role: " + role);
+      console.log("start: " + startDate);
+      console.log("rate: " + monthlyRate);
+      console.log("months: " + monthsWorked);
+      console.log("total: " + totalBilled);
+
+      database.ref().push({
+        name: name,
+        role: role,
+        startDate: startDate,
+        monthlyRate: monthlyRate,
+        monthsWorked: monthsWorked,
+        totalBilled: totalBilled,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+      });
+      $("#name").val("");
+      $("#role").val("");
+      $("#startDate").val("");
+      $("#monthlyRate").val("");
+    });
+
+     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+      console.log(snapshot.val());
+
+      var tr = $('<tr>'
+          + '<td>' + snapshot.val().name + '</td>'
+          + '<td>' + snapshot.val().role + '</td>'
+          + '<td>' + snapshot.val().startDate + '</td>'
+          + '<td>' + snapshot.val().monthsWorked + '</td>'
+          + '<td>' + snapshot.val().monthlyRate + '</td>'
+          + '<td>' + snapshot.val().totalBilled + '</td></tr>'
+          );
+      // Writes the saved value from firebase to our display
+      $("#addRow").prepend(tr);
+    
+      //Handles firebase failure if it occurs
+
+    }, function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    });
+
+
+
+</script> -->
+
+</body>
+<script src ="assets/javascript/schedule.js"></script>
+
+</html>
