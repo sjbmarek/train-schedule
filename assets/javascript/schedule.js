@@ -10,6 +10,29 @@
     messagingSenderId: "577306188182"
   };
 
+  // var currentTime = moment();
+    // console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+    // $("#time").text("Current Time: " + (moment(currentTime).format("h:mm:ss A")));
+
+
+    var update = function () {
+        currentTime = moment();
+        $("#time").text("Current Time: " + (moment(currentTime).format("h:mm:ss A")));
+
+    };
+
+    // Sends current time to display every second
+
+    $(document).ready(function(){
+        // currentTime = $('#time')
+        update();
+        setInterval(update, 1000);
+    });
+
+    var destinationCity = ["Seoul  서울", "Busan  부산", "Dongdaegu  동대구", "Incheon  인천", "Ulsan  울산", "Pyeongchang  평창"];
+
+
+
   firebase.initializeApp(config);
 
       var database = firebase.database();
@@ -32,7 +55,7 @@
       // var monthsWorked = Math.floor(moment().diff(startDate,"months",true));
 
       console.log("name: " + name);
-      console.log("destination: " + destination);
+      console.log("destination: " + destinationCity[destination]);
       console.log("time: " + trainTime);
       // console.log(moment(convertedTime).format("h:mm A"));
       console.log("freqeuncy: " + frequency);
@@ -40,7 +63,7 @@
 
       database.ref().push({
         name: name,
-        destination: destination,
+        destination: destinationCity[destination],
         trainTime: trainTime,
         frequency: frequency,
         // minutesAway: minutesAway,
@@ -69,7 +92,7 @@
       // How will the display update every minute?????  Add a decrimenting timer??
       
       // if (minutesAway === 0) {
-      //   trainTime = moment(snapshot.val().trainTime,"HH:mm").add(frequency,"minutes");
+      //   trainTime = moment(snapshot.val().trainTime,"HH:mm").add(snapshot.val().frequency,"minutes");
       //   database.ref().push({
       //   trainTime: trainTime,
       // });

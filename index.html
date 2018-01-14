@@ -14,11 +14,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://use.fontawesome.com/7c34d8d440.js"></script>
 
 </head>
 
 <body>
-
+<br>
   <div class="container">
 
     <div class="row">
@@ -27,6 +28,7 @@
       <div class="col-md-10 bg-warning text-center p-4">
           <h1>Train Schedule Korea  대한민국</h1>
           <h5>Complete schedule for KTX trains</h5>
+          <p>KTX 열차 전체 일정</p>
       </div>
     </div>
     <br>
@@ -36,9 +38,12 @@
       </div>
       <div class="col-md-10 card bg-light p-0">
          <div class="card-header">
-            <h4>Current Train Schedule</h4>
+            <h4><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp Current Train Schedule</h4>
          </div>
           <div class="card-body">
+            <div id="time" class="float-right"></div>
+            <br>
+            <br>
             <table class="table">
               <thead>
                 <tr>
@@ -66,7 +71,10 @@
       </div>
       <div class="col-md-10 card bg-light p-0">
         <div class="card-header">
-          <h4>Add a Train</h4>
+          <h4><i class="fa fa-train" aria-hidden="true"></i>&nbsp Add a Train</h4>
+        </div>
+        <div class="p-3 bg-warning text-center">
+          <p>KTX Destination Cities:  Seoul, Busan, Dongdaegu, Incheon, Ulsan, Pyeongchang.</p>
         </div>
         <form id="trainInformation" class ="border p-3">
 
@@ -74,11 +82,25 @@
           <label for="name">Train Name</label><br>
           <!-- Text Input Box -->
           <input type="text" id="name" class="form-control">
+          <br>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01">Destination City &nbsp&nbsp</label>
+            </div>
+            <select class="custom-select" id="destination">
+              <option selected>Choose</option>
+              <option value="0">Seoul  서울</option>
+              <option value="1">Busan  부산</option>
+              <option value="2">Dongdaegu  동대구</option>
+              <option value="3">Incheon  인천</option>
+              <option value="4">Ulsan  울산</option>
+              <option value="5">Pyeongchang  평창</option>
+            </select>
+          </div>
 
-
-           <label for="destination">Destination</label><br>
+           <!-- <label for="destination">Destination</label><br> -->
           <!-- Text Input Box -->
-          <input type="text" id="destination" class="form-control">
+          <!-- <input type="text" id="destination" class="form-control"> -->
 
 
            <label for="trainTime">First Train Time (HH:mm - military time)</label><br>
