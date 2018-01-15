@@ -10,34 +10,34 @@
     messagingSenderId: "577306188182"
   };
 
-  // var currentTime = moment();
-    // console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-    // $("#time").text("Current Time: " + (moment(currentTime).format("h:mm:ss A")));
+
+    firebase.initializeApp(config);
+
+    var database = firebase.database();
 
 
+    // Define function to update time
     var update = function () {
         currentTime = moment();
-        $("#time").text("Current Time: " + (moment(currentTime).format("h:mm:ss A")));
+        $("#time").text("Current Time " + (moment(currentTime).format("h:mm:ss A")));
+         console.log("db time: " + currentTime);
 
+         // database.ref().push({
+         // currentTime: currentTime
+         // });
     };
 
     // Sends current time to display every second
-
     $(document).ready(function(){
-        // currentTime = $('#time')
         update();
-        setInterval(update, 1000);
+        setInterval(update, 1000);  
     });
+
 
     var destinationCity = ["Seoul  서울", "Busan  부산", "Dongdaegu  동대구", "Incheon  인천", "Ulsan  울산", "Pyeongchang  평창"];
 
 
-
-  firebase.initializeApp(config);
-
-      var database = firebase.database();
-
-      $("#submit").on("click", function(event) {
+    $("#submit").on("click", function(event) {
       event.preventDefault();
 
       // Capture User Inputs and store them into variables
@@ -45,28 +45,17 @@
       var destination = $("#destination").val().trim();
       var trainTime = $("#trainTime").val().trim();
       var frequency = $("#frequency").val().trim();
-      // var convertedTime = moment(trainTime,"h:mm A");
-      // var minutesAway = Math.floor(moment().diff(trainTime,"minutes",true));
-      // var minutesAway = 17;
-      // var today = new moment();
-      // var emp_date = new moment(startDate);
-      // var dateDiff = moment().subtract(startDate);
-      // console.log(dateDiff);
-      // var monthsWorked = Math.floor(moment().diff(startDate,"months",true));
-
+   
       console.log("name: " + name);
       console.log("destination: " + destinationCity[destination]);
       console.log("time: " + trainTime);
-      // console.log(moment(convertedTime).format("h:mm A"));
       console.log("freqeuncy: " + frequency);
-      // console.log("minutes away: " + minutesAway);
-
+      // Save values to firebase
       database.ref().push({
         name: name,
         destination: destinationCity[destination],
         trainTime: trainTime,
         frequency: frequency,
-        // minutesAway: minutesAway,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
       // Clear the input fields
@@ -76,7 +65,8 @@
       $("#trainTime").val("");
     });
 
-     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+
+    database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
       console.log(snapshot.val());
 
       // var minutesAway = moment().diff(moment(snapshot.val().trainTime,"HH.mm"),"minutes");
@@ -108,7 +98,7 @@
           + '<td>' + moment(snapshot.val().trainTime,"HH:mm").format("h:mm A") + '</td>'
           + '<td>' + minutesAway + '</td></tr>'
           );
-      // Writes the saved value from firebase to the display
+      // Writes the saved values from firebase to the display
       $("#addRow").prepend(tr);
     
       //Handles firebase failure if it occurs
@@ -116,3 +106,19 @@
     }, function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+
+
+
+    // Notes for time manipulation
+
+    // // Time apart (remainder)
+    // var tRemainder = diffTime % tFrequency;
+    // console.log(tRemainder);
+
+    // // Minute Until Train
+    // var tMinutesTillTrain = tFrequency - tRemainder;
+    // console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // // Next Train
+    // var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    // console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
