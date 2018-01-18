@@ -19,16 +19,16 @@
 </head>
 
 <body>
-<br>
+  <br>
   <div class="container">
 
     <div class="row">
       <div class="col-md-1">
       </div>
       <div class="col-md-10 bg-warning text-center p-4">
-          <h1>Train Schedule Korea  대한민국</h1>
-          <h5>Complete schedule for KTX trains</h5>
-          <p>KTX 열차 전체 일정</p>
+        <h1>Train Schedule Korea  대한민국</h1>
+        <h5>Complete schedule for KTX trains</h5>
+        <p>KTX 열차 전체 일정</p>
       </div>
     </div>
     <br>
@@ -37,90 +37,80 @@
       <div class="col-md-1">
       </div>
       <div class="col-md-10 card bg-light p-0">
-         <div class="card-header">
-            <h4><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp Current Train Schedule</h4>
-         </div>
-          <div class="card-body">
-            <div id="time" class="float-right"></div>
-            <br>
-            <br>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Train Name</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">Frequency (min)</th>
-                  <th scope="col">Next Arrival</th>
-                  <th scope="col">Minutes Away</th>
-                  <!-- <th scope="col">Not Needed</th> -->
-                </tr>
-              </thead>
-              <tbody id="addRow">
-              </tbody>
-            </table>
-          </div>
-        </div>
+       <div class="card-header">
+        <h4><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp Current Train Schedule</h4>
       </div>
-      <br>
-  
-  
-
-
-    <div class="row">
-      <div class="col-md-1">
-      </div>
-      <div class="col-md-10 card bg-light p-0">
-        <div class="card-header">
-          <h4><i class="fa fa-train" aria-hidden="true"></i>&nbsp Add a Train</h4>
-        </div>
-        <div class="p-3 bg-warning text-center">
-          <p>KTX Destination Cities:  Seoul, Busan, Dongdaegu, Incheon, Ulsan, Pyeongchang.</p>
-        </div>
-        <form id="trainInformation" class ="border p-3">
-
-          <!-- Label for Text Box -->
-          <label for="name">Train Name</label><br>
-          <!-- Text Input Box -->
-          <input type="text" id="name" class="form-control">
-          <br>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Destination City &nbsp&nbsp</label>
-            </div>
-            <select class="custom-select" id="destination">
-              <option selected>Choose</option>
-              <option value="0">Seoul  서울</option>
-              <option value="1">Busan  부산</option>
-              <option value="2">Dongdaegu  동대구</option>
-              <option value="3">Incheon  인천</option>
-              <option value="4">Ulsan  울산</option>
-              <option value="5">Pyeongchang  평창</option>
-            </select>
-          </div>
-
-           <!-- <label for="destination">Destination</label><br> -->
-          <!-- Text Input Box -->
-          <!-- <input type="text" id="destination" class="form-control"> -->
-
-
-           <label for="trainTime">First Train Time (HH:mm - military time)</label><br>
-          <!-- Text Input Box -->
-          <input type="text" id="trainTime" class="form-control">
-
-
-           <label for="frequency">Frequency (min)</label><br>
-          <!-- Text Input Box -->
-          <input type="text" id="frequency" class="form-control"><br>
-
-          <!-- Submit Button -->
-          <!-- <input id="search" type="submit" value="Search"> -->
-          <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
-    
-        </form>
+      <div class="card-body">
+        <div id="time" class="float-right"></div>
+        <br>
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Train Name</th>
+              <th scope="col">Destination</th>
+              <th scope="col">Frequency (min)</th>
+              <th scope="col">Next Arrival</th>
+              <th scope="col">Minutes Away</th>
+            </tr>
+          </thead>
+          <tbody id="addRow">
+          </tbody>
+        </table>
       </div>
     </div>
-    <br>
   </div>
+  <br>
+  
+  
+
+
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10 card bg-light p-0">
+      <div class="card-header">
+        <h4><i class="fa fa-train" aria-hidden="true"></i>&nbsp Add a Train</h4>
+      </div>
+      <div class="p-3 bg-warning text-center">
+        <p>KTX Destination Cities:  Seoul, Busan, Dongdaegu, Incheon, Ulsan, Pyeongchang.</p>
+      </div>
+      <form id="trainInformation" class ="border p-3">
+
+        <label for="name">Train Name</label><br>
+        <input type="text" id="name" class="form-control">
+        <br>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Destination City &nbsp&nbsp</label>
+          </div>
+          <select class="custom-select" id="destination">
+            <option selected>Choose</option>
+            <option value="0">Seoul  서울</option>
+            <option value="1">Busan  부산</option>
+            <option value="2">Dongdaegu  동대구</option>
+            <option value="3">Incheon  인천</option>
+            <option value="4">Ulsan  울산</option>
+            <option value="5">Pyeongchang  평창</option>
+          </select>
+        </div>
+
+
+        <label for="trainTime">First Train Time (HH:mm - military time)</label><br>
+        <input type="text" id="trainTime" class="form-control">
+
+
+        <label for="frequency">Frequency (min)</label><br>
+        
+        <input type="text" id="frequency" class="form-control"><br>
+
+        <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
+        
+      </form>
+    </div>
+  </div>
+  <br>
+</div>
 
 
 </body>
