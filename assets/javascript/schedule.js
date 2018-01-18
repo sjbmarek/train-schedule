@@ -1,7 +1,7 @@
 
 
    // Initialize Firebase
-  var config = {
+   var config = {
     apiKey: "AIzaSyBkHlX4gqpYOqfBrQUZmY6XLl4LWfkLRJw",
     authDomain: "testsusan-56bcd.firebaseapp.com",
     databaseURL: "https://testsusan-56bcd.firebaseio.com",
@@ -11,25 +11,25 @@
   };
 
 
-    firebase.initializeApp(config);
+  firebase.initializeApp(config);
 
-    var database = firebase.database();
+  var database = firebase.database();
 
     // Define function to update time
     var update = function () {
-        currentTime = moment();
-        $("#time").text("Current Time " + (moment(currentTime).format("h:mm:ss A")));
+      currentTime = moment();
+      $("#time").text("Current Time " + (moment(currentTime).format("h:mm:ss A")));
          // console.log("db time: " + currentTime);
 
          // database.ref().push({
          // currentTime: currentTime
          // });
-    };
+       };
 
     // Sends current time to display every second
     $(document).ready(function(){
-        update();
-        setInterval(update, 1000);  
+      update();
+      setInterval(update, 1000);  
     });
 
 
@@ -44,7 +44,7 @@
       var destination = $("#destination").val().trim();
       var trainTime = $("#trainTime").val().trim();
       var frequency = $("#frequency").val().trim();
-   
+
       console.log("name: " + name);
       console.log("destination: " + destinationCity[destination]);
       console.log("time: " + trainTime);
@@ -67,37 +67,39 @@
     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
       console.log(snapshot.val());
 
-      var minutesAway = moment(snapshot.val().trainTime,"HH.mm").diff(moment(),"minutes");
-      console.log(minutesAway);
-      console.log("------------");
 
-      if (minutesAway < 0 ){
-        minutesAway = minutesAway + 1440;
-      };
+    var firstTime = snapshot.val().trainTime;
 
-      //if miuntesAway = 0, then update firebase with new trainTime = trainTime + frequency
-      // How will the display update every minute?????  Add a decrimenting timer??
-      
-      // if (minutesAway === 0) {
-      //   trainTime = moment(snapshot.val().trainTime,"HH:mm").add(snapshot.val().frequency,"minutes");
-      //   database.ref().push({
-      //   trainTime: trainTime,
-      // });
-      //   console.log("new trainTime: " + trainTime);
+    // First Time (pushed back 1 year to make sure it comes before current time)
+    var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+    console.log(firstTimeConverted);
 
-      // };
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
 
-  
-      var tr = $('<tr>'
-          + '<td>' + snapshot.val().name + '</td>'
-          + '<td>' + snapshot.val().destination + '</td>'
-          + '<td>' + snapshot.val().frequency + '</td>'
-          + '<td>' + moment(snapshot.val().trainTime,"HH:mm").format("h:mm A") + '</td>'
-          + '<td>' + minutesAway + '</td></tr>'
-          );
+    // Time apart (remainder)
+    var tRemainder = diffTime % (snapshot.val().frequency);
+    console.log(tRemainder);
+
+    // Minute Until Train
+    var tMinutesTillTrain = (snapshot.val().frequency) - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+    // Next Train
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
+    var tr = $('<tr>'
+      + '<td>' + snapshot.val().name + '</td>'
+      + '<td>' + snapshot.val().destination + '</td>'
+      + '<td>' + snapshot.val().frequency + '</td>'
+      + '<td>' + nextTrain.format("h:mm A") + '</td>'
+      + '<td>' + tMinutesTillTrain + '</td></tr>'
+      );
       // Writes the saved values from firebase to the display
       $("#addRow").prepend(tr);
-    
+
       //Handles firebase failure if it occurs
 
     }, function(errorObject) {
