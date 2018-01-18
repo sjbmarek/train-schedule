@@ -19,11 +19,6 @@
     var update = function () {
       currentTime = moment();
       $("#time").text("Current Time " + (moment(currentTime).format("h:mm:ss A")));
-         // console.log("db time: " + currentTime);
-
-         // database.ref().push({
-         // currentTime: currentTime
-         // });
        };
 
     // Sends current time to display every second
@@ -66,7 +61,6 @@
 
     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
       console.log(snapshot.val());
-
 
     var firstTime = snapshot.val().trainTime;
 
