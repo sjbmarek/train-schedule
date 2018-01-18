@@ -92,7 +92,18 @@
       + '<td>' + tMinutesTillTrain + '</td></tr>'
       );
       // Writes the saved values from firebase to the display
-      $("#addRow").prepend(tr);
+
+      // This mess is me trying to add a class to color the table row
+      //green if the train was withing 10 minutes of arrival.
+      // I was unsuccessful
+
+      // if (tMinutesTillTrain < 10) {
+      //   // $("tr").removeClass();
+      //   $("tr").addClass("soon");
+        $("#addRow").prepend(tr);
+      // } else {
+      //   $("#addRow").prepend(tr);
+      // };
 
       //Handles firebase failure if it occurs
 
