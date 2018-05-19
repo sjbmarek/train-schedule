@@ -19,7 +19,7 @@
     var update = function () {
       currentTime = moment();
       $("#time").text("Current Time " + (moment(currentTime).format("h:mm:ss A")));
-       };
+    };
 
     // Sends current time to display every second
     $(document).ready(function(){
@@ -62,50 +62,72 @@
     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
       console.log(snapshot.val());
 
-    var firstTime = snapshot.val().trainTime;
+      var firstTime = snapshot.val().trainTime;
 
-    // First Time (pushed back 1 year to make sure it comes before current time)
-    var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
-    console.log(firstTimeConverted);
+      // First Time (pushed back 1 year to make sure it comes before current time)
+      var firstTimeConverted = moment(firstTime, "hh:mm").subtract(1, "years");
+      console.log(firstTimeConverted);
 
-    // Difference between the times
-    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
+      // Difference between the times
+      var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+      console.log("DIFFERENCE IN TIME: " + diffTime);
 
-    // Time apart (remainder)
-    var tRemainder = diffTime % (snapshot.val().frequency);
-    console.log(tRemainder);
+      // Time apart (remainder)
+      var tRemainder = diffTime % (snapshot.val().frequency);
+      console.log(tRemainder);
 
-    // Minute Until Train
-    var tMinutesTillTrain = (snapshot.val().frequency) - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+      // Minute Until Train
+      var tMinutesTillTrain = (snapshot.val().frequency) - tRemainder;
+      console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-    // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+      // Next Train
+      var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-    var tr = $('<tr>'
-      + '<td>' + snapshot.val().name + '</td>'
-      + '<td>' + snapshot.val().destination + '</td>'
-      + '<td>' + snapshot.val().frequency + '</td>'
-      + '<td>' + nextTrain.format("h:mm A") + '</td>'
-      + '<td>' + tMinutesTillTrain + '</td></tr>'
-      );
-      // Writes the saved values from firebase to the display
+      if (tMinutesTillTrain < 10) {
 
-      // This mess is me trying to add a class to color the table row
-      //green if the train was withing 10 minutes of arrival.
-      // I was unsuccessful
+        var trow = $('<tr class="sooner">'
+          + '<td>' + snapshot.val().name + '</td>'
+          + '<td>' + snapshot.val().destination + '</td>'
+          + '<td>' + snapshot.val().frequency + '</td>'
+          + '<td>' + nextTrain.format("h:mm A") + '</td>'
+          + '<td>' + tMinutesTillTrain + '</td>'
+          + '<td><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+          );
+        $("#addRow").prepend(trow);
 
-      // if (tMinutesTillTrain < 10) {
-      //   // $("tr").removeClass();
-      //   $("tr").addClass("soon");
-        $("#addRow").prepend(tr);
-      // } else {
-      //   $("#addRow").prepend(tr);
-      // };
 
-      //Handles firebase failure if it occurs
+      } else {
+
+
+
+      var trow = $('<tr class="later">'
+        + '<td>' + snapshot.val().name + '</td>'
+        + '<td>' + snapshot.val().destination + '</td>'
+        + '<td>' + snapshot.val().frequency + '</td>'
+        + '<td>' + nextTrain.format("h:mm A") + '</td>'
+        + '<td>' + tMinutesTillTrain + '</td>'
+        + '<td><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+        );
+      $("#addRow").prepend(trow);
+    };
+        // Writes the saved values from firebase to the display
+
+        // This mess is me trying to add a class to color the table row
+        //green if the train was withing 10 minutes of arrival.
+        // I was unsuccessful
+
+        // if (tMinutesTillTrain < 10) {
+          // $("trow").removeClass();
+          // $("trow").addClass("sooner");
+          // ("#addRow").prepend(trow);$
+        // } else {
+          // $("tr").removeClass();
+          // $("tr").addClass("later");
+          // $("#addRow").prepend(trow);
+        // };
+
+        //Handles firebase failure if it occurs
 
     }, function(errorObject) {
       console.log("The read failed: " + errorObject.code);

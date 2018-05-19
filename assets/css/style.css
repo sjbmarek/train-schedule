@@ -1,7 +1,38 @@
 body {background-color: #3d3e3f;
+	margin-bottom: 64px;
 }
 
 
-.soon {background-color: lightgreen;
+.sooner {
+	background-color: #f9efd3;
 }
 
+.later {
+	background-color:  #f7f5f5;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 64px;
+    line-height: 60px;
+    background-color: #3d3e3f;
+}
+
+.footercontainer {
+    width: auto;
+    max-width: 680px;
+    padding: 0 15px;
+}
+
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.footertext {
+    color: gray;
+    font-size: 10px;
+}
