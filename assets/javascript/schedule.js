@@ -25,7 +25,7 @@
     $(document).ready(function(){
       update();
       setInterval(update, 1000);  
-    });
+    // });
 
 
     var destinationCity = ["Seoul  서울", "Busan  부산", "Dongdaegu  동대구", "Incheon  인천", "Ulsan  울산", "Pyeongchang  평창"];
@@ -59,6 +59,13 @@
       $("#trainTime").val("");
     });
 
+    $('#addRow').on('click', '#remove', function() {
+        console.log('button clicked');
+        event.preventDefault();
+        database.ref().child('name').remove(); // this removes the parent of test (RemoveTest)
+        // nameRef.child('name').remove(); // this removes "name:'me'" from root (RemoveTest)
+    });
+
     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
       console.log(snapshot.val());
 
@@ -85,50 +92,30 @@
       console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
       if (tMinutesTillTrain < 10) {
-
-        var trow = $('<tr class="sooner">'
+        var trow = $('<tr class="sooner rowtest">'
           + '<td>' + snapshot.val().name + '</td>'
           + '<td>' + snapshot.val().destination + '</td>'
           + '<td>' + snapshot.val().frequency + '</td>'
           + '<td>' + nextTrain.format("h:mm A") + '</td>'
           + '<td>' + tMinutesTillTrain + '</td>'
-          + '<td><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+          + '<td id="remove"><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
           );
         $("#addRow").prepend(trow);
-
-
       } else {
-
-
-
-      var trow = $('<tr class="later">'
-        + '<td>' + snapshot.val().name + '</td>'
-        + '<td>' + snapshot.val().destination + '</td>'
-        + '<td>' + snapshot.val().frequency + '</td>'
-        + '<td>' + nextTrain.format("h:mm A") + '</td>'
-        + '<td>' + tMinutesTillTrain + '</td>'
-        + '<td><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
-        );
-      $("#addRow").prepend(trow);
-    };
-        // Writes the saved values from firebase to the display
-
-        // This mess is me trying to add a class to color the table row
-        //green if the train was withing 10 minutes of arrival.
-        // I was unsuccessful
-
-        // if (tMinutesTillTrain < 10) {
-          // $("trow").removeClass();
-          // $("trow").addClass("sooner");
-          // ("#addRow").prepend(trow);$
-        // } else {
-          // $("tr").removeClass();
-          // $("tr").addClass("later");
-          // $("#addRow").prepend(trow);
-        // };
+        var trow = $('<tr class="later rowtest">'
+          + '<td>' + snapshot.val().name + '</td>'
+          + '<td>' + snapshot.val().destination + '</td>'
+          + '<td>' + snapshot.val().frequency + '</td>'
+          + '<td>' + nextTrain.format("h:mm A") + '</td>'
+          + '<td>' + tMinutesTillTrain + '</td>'
+          + '<td id="remove"><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+          );
+        $("#addRow").prepend(trow);
+      };
 
         //Handles firebase failure if it occurs
 
     }, function(errorObject) {
       console.log("The read failed: " + errorObject.code);
     });
+  });
