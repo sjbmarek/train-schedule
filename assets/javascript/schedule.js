@@ -59,11 +59,11 @@
       $("#trainTime").val("");
     });
 
-    $('#addRow').on('click', '#remove', function() {
-        console.log('button clicked');
+    $('#addRow').on('click', '.remove', function() {
+        console.log('remove button clicked');
         event.preventDefault();
-        database.ref().child('name').remove(); // this removes the parent of test (RemoveTest)
-        // nameRef.child('name').remove(); // this removes "name:'me'" from root (RemoveTest)
+        database.ref().child($(this).attr('data-value')).remove();
+        this.closest("tr").remove();
     });
 
     database.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
@@ -90,6 +90,9 @@
       // Next Train
       var nextTrain = moment().add(tMinutesTillTrain, "minutes");
       console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+      console.log("KEY= " + snapshot.key);
+    
+
 
       if (tMinutesTillTrain < 10) {
         var trow = $('<tr class="sooner rowtest">'
@@ -98,7 +101,7 @@
           + '<td>' + snapshot.val().frequency + '</td>'
           + '<td>' + nextTrain.format("h:mm A") + '</td>'
           + '<td>' + tMinutesTillTrain + '</td>'
-          + '<td id="remove"><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+          + '<td><i class="fa fa-trash remove" aria-hidden="true" data-value=' + snapshot.key + '></i></td></tr>'
           );
         $("#addRow").prepend(trow);
       } else {
@@ -108,7 +111,7 @@
           + '<td>' + snapshot.val().frequency + '</td>'
           + '<td>' + nextTrain.format("h:mm A") + '</td>'
           + '<td>' + tMinutesTillTrain + '</td>'
-          + '<td id="remove"><i class="fa fa-trash" aria-hidden="true"></i></td></tr>'
+          + '<td><i class="fa fa-trash remove" aria-hidden="true" data-value=' + snapshot.key + '></i></td></tr>'
           );
         $("#addRow").prepend(trow);
       };
