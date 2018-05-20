@@ -2,7 +2,7 @@
 
 # KTX Train Schedule
 
-A train schedule application using Firebase to host arrival and destination data.  Moment.js manipulates the time information. This app provides up-to-date information about various trains: arrival times, how many minutes remain until they arrive at their station and frequency.  Trains may be deleted from the shcedule as well.<br>
+A train schedule application using Firebase to host arrival and destination data.  Moment.js manipulates the time information. This app provides up-to-date information about various trains: arrival times, how many minutes remain until they arrive at their station and frequency.  Trains may be deleted from the schedule as well.<br>
 [View KTX Train Schedule](https://sjbmarek.github.io/train-schedule/)
 
 ## Getting Started
