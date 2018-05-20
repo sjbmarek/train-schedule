@@ -17,3 +17,5 @@ Open **index.html**<br>
 * [Moment.js](https://momentjs.com/) - Javascript library used to manipulate and calculate time values
 * [Bootstrap](https://getbootstrap.com/) - Responisive front end framework
 * [FontAwesome](https://fontawesome.com/) - Icon library
+
+![KTX Trains](/screenshot.PNG)
